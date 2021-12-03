@@ -1,14 +1,14 @@
-import axios from "axios";
-import { LoginTypes } from "./data-types";
+import axios from 'axios';
+import { LoginTypes } from './data-types';
 
 const NEXT_PUBLIC_API = process.env.NEXT_PUBLIC_API;
-const API_VERSION = "api";
+const API_VERSION = 'api';
 
 export async function setSignUp(data) {
-  const URL = "auth/register";
+  const URL = 'auth/register';
 
   const respon = await axios.post(`${NEXT_PUBLIC_API}/${API_VERSION}/${URL}`, data).catch((err) => err.response);
-  console.log("api resp", respon);
+  // console.log("api resp", respon);
   const axiosResponse = respon.data;
 
   if (axiosResponse?.error === 1) {
@@ -19,11 +19,9 @@ export async function setSignUp(data) {
 }
 
 export async function setLogin(data: LoginTypes) {
-  const URL = "auth/signin";
+  const URL = 'auth/signin';
 
   const respon = await axios.post(`${NEXT_PUBLIC_API}/${API_VERSION}/${URL}`, data).catch((err) => err.response);
-  console.log("api resp", respon.data);
-  //   const axiosResponse = respon.data;
 
   if (respon.status > 300) {
     const res = {
@@ -35,7 +33,7 @@ export async function setLogin(data: LoginTypes) {
   }
   const res = {
     error: false,
-    message: "success",
+    message: 'success',
     data: respon.data.data,
   };
   return res;

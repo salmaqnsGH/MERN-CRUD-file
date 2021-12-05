@@ -28,3 +28,9 @@ export async function addFile(data) {
 
   return callAPI({ url, method: 'POST', data, token: true });
 }
+
+export async function deleteFile(data) {
+  const url = `${ROOT_API}/${API_VERSION}/deleteFile?file=${data}`;
+
+  return callAPI({ url, method: 'DELETE', token: true });
+}

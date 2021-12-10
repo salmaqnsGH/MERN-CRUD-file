@@ -10,17 +10,12 @@ export default function Navbar() {
     router.push('/login');
   };
 
-  useEffect(() => {
-    const c = Cookies.get('token');
-    if (!c) router.push('/login');
-  }, []);
-
   return (
     <>
       <div className='topnav'>
-        <a className='active' type='button' onClick={onLogout}>
+        <button className='active' type='button' onClick={onLogout}>
           Logout
-        </a>
+        </button>
       </div>
     </>
   );

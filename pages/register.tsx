@@ -85,7 +85,7 @@ export default function SignUp() {
           Continue
         </button>
         <Link href='/login'>
-          <a role='button'>Login</a>
+          <a type='button'>Login</a>
         </Link>
       </div>
       <ToastContainer />

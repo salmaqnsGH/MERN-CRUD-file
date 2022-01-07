@@ -56,13 +56,16 @@ export default function Main() {
     let btn = document.createElement('button');
     btn.innerHTML = 'Submit';
     btn.type = 'submit';
+    btn.className = 'btn btn-sm btn-primary btn-block m-1';
     btn.onclick = async function () {
       await updateFile({ content: inputForm.value, fileName }).then((v) => {
         inputForm.remove();
         btn.remove();
         const newLink = document.createElement('a');
+        const newLinkU = document.createElement('u');
         const text = document.createTextNode(fileName);
-        newLink.appendChild(text);
+        newLink.appendChild(newLinkU);
+        newLinkU.appendChild(text);
         newLink.id = userFileId;
         newLink.target = '_blank';
         newLink.href = aHref;
@@ -70,6 +73,7 @@ export default function Main() {
 
         let btnUpdate = document.createElement('button');
         btnUpdate.id = 'bt-' + userFileId;
+        btnUpdate.className = 'btn btn-sm btn-primary btn-block m-1';
         btnUpdate.innerHTML = 'Update';
         btnUpdate.type = 'button';
         btnUpdate.onclick = () => {
@@ -84,49 +88,61 @@ export default function Main() {
   const URL = process.env.NEXT_PUBLIC_URL;
   return (
     <>
-      <div>
-        <input
-          type='text'
-          id='fname'
-          placeholder='Your message'
-          value={message}
-          onChange={(event) => setMessage(event.target.value)}
-        />
-        <button type='button' onClick={onAddFile}>
-          Add Message
-        </button>
-      </div>
-      <br />
-      <div>
-        File List:
-        <ol>
-          {files.map((userFile) => {
-            return (
-              <>
-                <li key={userFile._id} id={`li-${userFile._id}`}>
-                  <a
-                    id={userFile._id}
-                    href={`${URL}/${userFile.userId}/${userFile.fileName}`}
-                    target='_blank'
-                    rel='noreferrer'
-                  >
-                    {userFile.fileName}
-                  </a>
-                  <button type='button' onClick={() => onDeleteFile(userFile.fileName)}>
-                    Delete
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-9 col-md-7 col-lg-5">
+            <div className="form-inline">
+              <div className="form-group">
+                <div className="input-group">
+                  <input
+                    type='text'
+                    className="form-control"
+                    id='fname'
+                    placeholder='Your message'
+                    value={message}
+                    onChange={(event) => setMessage(event.target.value)}
+                  />
+                  <button type='button' className="btn btn-sm btn-primary btn-block m-1" onClick={onAddFile}>
+                    Add Message
                   </button>
-                  <button
-                    id={`bt-${userFile._id}`}
-                    type='button'
-                    onClick={() => onUpdate(userFile._id, userFile.content, userFile.fileName)}
-                  >
-                    Update
-                  </button>
-                </li>
-              </>
-            );
-          })}
-        </ol>
+                </div>
+              </div>
+            </div>
+            <br />
+            <div>
+              File List:
+              <ol>
+                {files.map((userFile) => {
+                  return (
+                    <>
+                          <li key={userFile._id} id={`li-${userFile._id}`}>
+                            <a
+                              id={userFile._id}
+                              href={`${URL}/${userFile.userId}/${userFile.fileName}`}
+                              target='_blank'
+                              rel='noreferrer'
+                            >
+                              <u> {userFile.fileName} </u>
+                            </a>
+                            <button type='button'className="btn btn-sm btn-danger btn-block m-1" onClick={() => onDeleteFile(userFile.fileName)}>
+                              Delete
+                            </button>
+                            <button
+                              id={`bt-${userFile._id}`}
+                              type='button'
+                              className="btn btn-sm btn-primary btn-block m-1"
+                              onClick={() => onUpdate(userFile._id, userFile.content, userFile.fileName)}
+                            >
+                              Update
+                            </button>
+                          </li>
+                    </>
+                  );
+                })}
+              </ol>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
